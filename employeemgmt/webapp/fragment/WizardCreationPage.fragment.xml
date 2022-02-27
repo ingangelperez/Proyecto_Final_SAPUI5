@@ -132,7 +132,7 @@
                                           multiple="true"
                                           sameFilenameAllowed="true"
                                           instantUpload="false"
-                                          uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                          uploadUrl="/aapgemployeemgmt/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
                                           change=".onFileChange"
                                           uploadComplete=".onFileUploadComplete"
                                           beforeUploadStarts=".onFileBeforeUpload"

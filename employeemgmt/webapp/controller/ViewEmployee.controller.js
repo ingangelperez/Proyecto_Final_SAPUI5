@@ -401,7 +401,7 @@ sap.ui.define([
 
             onDownloadFile: function (oEvent) {
                 var sPath = oEvent.getSource().getBindingContext("employeesModel").getPath();
-                window.open("/sap/opu/odata/sap/ZEMPLOYEES_SRV" + sPath + "/$value");
+                window.open("/aapgemployeemgmt/sap/opu/odata/sap/ZEMPLOYEES_SRV" + sPath + "/$value");
             },
 
             onNavBack: function (oEvent) {
