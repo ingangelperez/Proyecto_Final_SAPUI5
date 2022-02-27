@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" 
+                         xmlns:core="sap.ui.core"
+                         xmlns:form="sap.ui.layout.form"
+                         xmlns:upload="sap.m.upload">
+
+    <Page id="employeeMasterPage"
+          showFooter="false"
+          showNavButton="true"
+          title="{i18n>employeesMasterView}"
+          navButtonPress=".onNavBack">
+        
+        <customHeader>
+            <OverflowToolbar>
+                <Button icon="sap-icon://nav-back" type="Ghost" press="onNavBack"/>
+                <SearchField search=".onFilterMaster" width="auto" />
+            </OverflowToolbar>
+        </customHeader>
+
+        <content>
+            <List
+                id="employeeList"
+                showNoData="true"
+                items="{ path: 'employeesModel>/Users',
+                        filters: [{
+                            path: 'SapId',
+                            operator: 'EQ',
+                            value1: 'ing.perez.angel@gmail.com'
+                        }]}" >
+                <StandardListItem
+                    title="{employeesModel>FirstName} {employeesModel>LastName}"
+                    description="{employeesModel>Dni}"
+                    icon=""
+                    type="Active" 
+                    press=".onNavToDetail"/>
+            </List>
+        </content>
+
+    </Page>
+</core:FragmentDefinition> 

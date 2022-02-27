@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns="sap.m">
+
+    <Dialog title="{i18n>newAscend}">
+        <content>
+            
+                    <VBox class="sapUiSmallMargin">
+                        <Label text="{i18n>newSalary}" labelFor="newSalary"/>
+                        <Input id="newSalary" 
+                               value="{parts: [{path: 'createEmplConfig>/NewSalary'}, 
+                                                {path: 'createEmplConfig>/DefaultCurrency'}], 
+                                                type: 'sap.ui.model.type.Currency', 
+                                                formatOptions:{showMeasure:false}}"
+                               change=".onNewSalaryChange"/>
+                        <Label text="{i18n>date}" labelFor="newSalaryDate"/>
+                        <DatePicker id="newSalaryDate"
+                                    dateValue="{createEmplConfig>/CreationDate}" 
+                                    change=".onNewSalaryDateChange"
+                                    valueState="{= ${createEmplConfig>/CreationDateState} === true ? 'None' : 'Error'}"/>
+                        <Label text="{i18n>commentary}" 
+                               labelFor="employeeNewComments"/>
+                        <TextArea id="employeeNewComments"
+                                  width="100%"
+                                  rows="{= ${device>/system/desktop} === true ? 3 : 5}"
+                                  showExceededText="true"
+                                  liveChange=".checkComments"
+                                  maxLength="200"
+                                  value="{createEmplConfig>/Commentary}"
+                                  valueState="{= ${createEmplConfig>/CommentaryState} === true ? 'None' : 'Error'}"
+                                  valueStateText="{i18n>invalidComments}"/>
+                    </VBox>                    
+            
+        </content>
+        <beginButton>
+            <Button text="{i18n>btnAscendAccept}"
+                    press=".onSaveAscend"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>btnAscendCancel}"
+                    press=".onCancelAscend"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

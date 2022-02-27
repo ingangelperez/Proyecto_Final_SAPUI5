@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" 
+                         xmlns:core="sap.ui.core"
+                         xmlns:form="sap.ui.layout.form"
+                         xmlns:upload="sap.m.upload">
+    <Page showHeader="{= ${device>/system/desktop} === true ? false : true}">
+        <content>
+            <MessagePage id="detailLandingPage"
+                         showHeader="false"
+				         enableFormattedText="true"
+				         description="{i18n>selectEmployee}"
+                         text=""
+                         icon=""/>
+        </content>
+    </Page>
+</core:FragmentDefinition> 

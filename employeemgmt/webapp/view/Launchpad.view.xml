@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="aapg.employeemgmt.controller.Launchpad"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+    <Page title="{i18n>launchpadTitle}">
+        <content>
+            
+            <Panel id="lpdEmplPanel"
+                   headerText="{i18n>lpdEmployeesPanel}"
+                   expandable="true"
+                   expanded="true" 
+                   width="auto"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <GenericTile class="sapUiTinyMargin" 
+                                 header="{i18n>tileCreateEmployee}"
+                                 press=".onTileClick"
+                                 app:customAction="createEmployee">
+                        <TileContent>
+                            <ImageContent src="sap-icon://add-employee"/>
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile class="sapUiTinyMargin" 
+                                 header="{i18n>tileViewEmployee}"
+                                 press=".onTileClick"
+                                 app:customAction="viewEmployee">
+                        <TileContent>
+                            <ImageContent src="sap-icon://employee-lookup"/>
+                        </TileContent>
+                    </GenericTile>
+                </content>
+            </Panel>
+
+            <Panel id="lpdOrdersPanel"
+                   headerText="{i18n>lpdOrdersPanel}"
+                   expandable="true"
+                   expanded="true" 
+                   width="auto"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <GenericTile class="sapUiTinyMargin" 
+                                 header="{i18n>tileSignOrders}" 
+                                 press=".onTileClick"
+                                 url="https://eeab236ftrial-dev-employees-approuter.cfapps.us10.hana.ondemand.com"
+                                 app:customAction="signOrders">
+                        <TileContent>
+                            <ImageContent src="sap-icon://signature"/>
+                        </TileContent>
+                    </GenericTile>
+                </content>
+            </Panel>
+
+        </content>
+    </Page>
+
+</mvc:View>

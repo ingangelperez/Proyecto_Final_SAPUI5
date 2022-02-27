@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.m" 
+                         xmlns:core="sap.ui.core"
+                         xmlns:form="sap.ui.layout.form"
+                         xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Page id="wizardReviewPage"
+          title="{i18n>reviewPage}" 
+          showFooter="true">
+
+        <content>
+            <form:SimpleForm title="1. {i18n>wizardEmplType}" editable="false" layout="ResponsiveGridLayout">
+                <form:content>
+                    <Label text="{i18n>employeeType}"/>
+                    <Text text="{= ${createEmplConfig>/EmplTypeSelectedKey} === 'internConfig' ? ${i18n>employeeTypeIntern} 
+                                : ${createEmplConfig>/EmplTypeSelectedKey} === 'ManagerConfig' ? ${i18n>employeeTypeManager} : ${i18n>employeeTypeSelf}}"/>
+                    <Link press=".onEditStep" text="{i18n>editStep}" app:editToStep="0"/>
+                </form:content>
+            </form:SimpleForm>
+
+            <form:SimpleForm title="2. {i18n>wizardEmplData}" editable="false" layout="ResponsiveGridLayout">
+                <form:content>
+                    <Label text="{i18n>employeeName}"/>
+                    <Text text="{createEmplConfig>/Name}"/>
+                    <Label text="{i18n>employeeLastName}"/>
+                    <Text text="{createEmplConfig>/LastName}"/>
+                    <Label text="{= ${createEmplConfig>/DNIVisible} === true ? ${i18n>employeeDNI} : ${i18n>employeeCIF}}"/>
+                    <Text text="{= ${createEmplConfig>/DNIVisible} === true ? ${createEmplConfig>/DNI} : ${createEmplConfig>/CIF}}"/>
+                    <Label text="{= ${createEmplConfig>/SalaryVisible} === true ? ${i18n>employeeSalary} : ${i18n>employeePrice}}" 
+                           labelFor="totalSalary"/>
+                    <Text id="totalSalary"
+                        text="{parts: [{path: 'createEmplConfig>/CurrentSalary'}, 
+                                                {path: 'createEmplConfig>/DefaultCurrency'}], 
+                                                type: 'sap.ui.model.type.Currency', 
+                                                formatOptions:{showMeasure:false}}"/>
+                    <Label text="{i18n>employeeCreationDate}"/>
+                    <Text text="{path:'createEmplConfig>/CreationDate', type:'sap.ui.model.odata.type.Date'}"/>
+                    <Link press=".onEditStep" text="{i18n>editStep}" app:editToStep="1"/>
+                </form:content>
+            </form:SimpleForm>
+
+            <form:SimpleForm title="3. {i18n>wizardEmplAdditInfo}" editable="false" layout="ResponsiveGridLayout">
+                <form:content>
+                    <Label text="{i18n>commentary}"/>
+                    <Text text="{createEmplConfig>/Commentary}"/>
+                    <Label text="{i18n>attachmentDocument}"/>
+                    <Text text="{createEmplConfig>/FilesCount} {i18n>file}"/>
+                    <Label text=""/>
+                    <List noDataText="{i18n>noAttachment}"
+                          width="auto"
+                          items="{createEmplConfig>/Files}">
+                        <items>
+                            <StandardListItem title="{createEmplConfig>FileName}"/>
+                            <!--<StandardListItem title="{createEmplConfig>FileName}"
+                                              info="{createEmplConfig>FileStatus}"
+                                              infoState="Success"/>-->
+                        </items>
+                    </List>
+                    <Link press=".onEditStep" text="{i18n>editStep}" app:editToStep="2"/>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnSaveEmployee}"
+                        press=".onSaveEmployee"
+                        type="Accept"/>
+                <Button text="{i18n>btnCancelWizard}"
+                        type="Reject"
+                        press=".onCancelWizard"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:FragmentDefinition> 

@@ -1,0 +1,155 @@
+<core:FragmentDefinition xmlns="sap.m" 
+                         xmlns:core="sap.ui.core"
+                         xmlns:form="sap.ui.layout.form"
+                         xmlns:upload="sap.m.upload">
+    <Page id="wizardCreatePage"
+          showHeader="false" 
+          showFooter="true">
+        <content>
+            <Wizard id="wizardCreateEmployee" 
+                    class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+                    complete=".onWizardCompleted">
+                
+                <WizardStep id="wizardEmplTypeStep"
+							title="{i18n>wizardEmplType}"
+							validated="true">
+                    <MessageStrip showIcon="true"
+                                  text="{i18n>wizardEmplTypeStepInfo}"
+                                  class="sapUiTinyMarginBottom"/>
+                    <HBox alignItems="Center"
+                          justifyContent="Center"
+                          width="100%">
+                        <SegmentedButton selectionChange=".setEmployeeType"
+                                         selectedKey="{createEmplConfig>/EmplTypeSelectedKey}"
+                                         width="320px">
+                            <items>
+                                <SegmentedButtonItem key="internConfig"
+                                                     text="{i18n>employeeTypeIntern}"/>
+                                <SegmentedButtonItem key="SelfConfig"
+                                                     text="{i18n>employeeTypeSelf}"/>
+                                <SegmentedButtonItem key="ManagerConfig"
+                                                     text="{i18n>employeeTypeManager}"/>
+                            </items>
+                        </SegmentedButton>
+                    </HBox>
+                </WizardStep>
+
+                <WizardStep id="wizardEmplDataStep"
+							title="{i18n>wizardEmplData}"
+							validated="false">
+                    <MessageStrip showIcon="true"
+                                  text="{i18n>wizardEmplDataStepInfo}"
+                                  class="sapUiTinyMarginBottom"/>
+                    
+                    <form:SimpleForm editable="true">
+                        <Label text="{i18n>employeeName}" 
+                               labelFor="employeeName"
+                               required="true"/>
+                        <Input id="employeeName"
+                               value="{createEmplConfig>/Name}"
+                               maxLength="40"
+                               liveChange=".validateName"
+                               valueState="{= ${createEmplConfig>/NameState} === true ? 'None' : 'Error'}"/>
+                        <Label text="{i18n>employeeLastName}" 
+                               labelFor="employeeLastName"
+                               required="true"/>
+                        <Input id="employeeLastName"
+                               value="{createEmplConfig>/LastName}"
+                               maxLength="40"
+                               liveChange=".validateLastName"
+                               valueState="{= ${createEmplConfig>/LastNameState} === true ? 'None' : 'Error'}"/>
+                        <Label text="{i18n>employeeDNI}" 
+                               labelFor="employeeDNI"
+                               required="{createEmplConfig>/DNIObligatory}"/>
+                        <Input id="employeeDNI"
+                               value="{createEmplConfig>/DNI}"
+                               maxLength="9"
+                               liveChange=".validateDNI"
+                               change=".validateDNI"
+                               valueState="{= ${createEmplConfig>/DNIState} === true ? 'None' : 'Error'}"
+                               valueStateText="{i18n>invalidDNI}"
+                               visible="{createEmplConfig>/DNIVisible}"/>
+                        <Label text="{i18n>employeeCIF}" 
+                               labelFor="employeeCIF"
+                               required="{createEmplConfig>/CIFObligatory}"/>
+                        <Input id="employeeCIF"
+                               value="{createEmplConfig>/CIF}"
+                               maxLength="9"
+                               liveChange=".validateCIF"
+                               change=".validateCIF"
+                               valueState="{= ${createEmplConfig>/CIFState} === true ? 'None' : 'Error'}"
+                               valueStateText="{i18n>invalidCIF}"
+                               visible="{createEmplConfig>/CIFVisible}"/>
+                        <Label text="{= ${createEmplConfig>/SalaryVisible} === true ? ${i18n>employeeSalary} : ${i18n>employeePrice}}" 
+                               labelFor="employeeSalary"
+                               required="true"/>
+                        <Slider id="employeeSalary"
+                                min="{createEmplConfig>/SalaryMin}" 
+                                max="{createEmplConfig>/SalaryMax}"
+                                value="{createEmplConfig>/CurrentSalary}"
+                                showAdvancedTooltip="true"
+                                inputsAsTooltips="true"
+                                enableTickmarks="true" 
+                                class="sapUiMediumMarginBottom" 
+                                width="99%"/>
+                        <Label text="{i18n>employeeCreationDate}" 
+                               labelFor="employeeDate"
+                               required="true"/>
+                        <DatePicker id="employeeDate"
+                                    dateValue="{createEmplConfig>/CreationDate}" 
+                                    change=".validateDate"
+                                    valueState="{= ${createEmplConfig>/CreationDateState} === true ? 'None' : 'Error'}"/>
+                    </form:SimpleForm>
+                </WizardStep>
+
+                <WizardStep id="wizardEmplAdditionalStep"
+							title="{i18n>wizardEmplAdditInfo}"
+							validated="true">
+                    <MessageStrip showIcon="true"
+                                  text="{i18n>wizardEmplAdditInfoStepInfo}"
+                                  class="sapUiTinyMarginBottom"/>
+                    
+                    <form:SimpleForm editable="true">
+                        <Label text="{i18n>commentary}" 
+                               labelFor="employeeAdditInfo"/>
+                        <TextArea id="employeeAdditInfo"
+                                  width="100%"
+                                  rows="{= ${device>/system/desktop} === true ? 3 : 5}"
+                                  showExceededText="true"
+                                  liveChange=".checkComments"
+                                  maxLength="200"
+                                  valueState="{= ${createEmplConfig>/CommentaryState} === true ? 'None' : 'Error'}"
+                                  valueStateText="{i18n>invalidComments}"
+                                  value="{createEmplConfig>/Commentary}"/>
+                    </form:SimpleForm>
+
+                    <Panel class="sapUiResponsiveMargin"
+                           width="auto">
+
+                        <UploadCollection id="uploadFile"
+                                          maximumFilenameLength="55"
+                                          maximumFileSize="2"
+                                          multiple="true"
+                                          sameFilenameAllowed="true"
+                                          instantUpload="false"
+                                          uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                          change=".onFileChange"
+                                          uploadComplete=".onFileUploadComplete"
+                                          beforeUploadStarts=".onFileBeforeUpload"
+                                          filenameLengthExceed=".onFilenameLengthExceed"
+                                          fileSizeExceed=".onFileSizeExceed"/>
+                    </Panel>
+                </WizardStep>
+
+            </Wizard>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnCancelWizard}"
+                        type="Reject"
+                        press=".onCancelWizard"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:FragmentDefinition> 

@@ -1,0 +1,124 @@
+<core:FragmentDefinition xmlns="sap.m" 
+                         xmlns:core="sap.ui.core"
+                         xmlns:c="sap.suite.ui.commons"
+                         xmlns:upload="sap.m.upload">
+
+    <Page id="employeeDetailPage"
+          showFooter="true">
+        
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://menu2" press="onBackToMaster" visible="{device>/system/phone}"/>
+                </contentLeft>
+                <contentMiddle>
+                    <Text text="{i18n>pageViewEmployee}"/>
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <ObjectHeader id="objHeaderEmplDetail" 
+					      intro="{employeesModel>Dni}" 
+						  title="{employeesModel>FirstName} {employeesModel>LastName}" 
+						  titleActive="false" 
+						  condensed="false"
+						  responsive="true" 
+                          icon="{= ${employeesModel>Type} === '0' ? 'sap-icon://employee-pane' 
+                                 : ${employeesModel>Type} === '1' ? 'sap-icon://employee' : 'sap-icon://leads' }">
+				<attributes>
+					<ObjectAttribute title="{i18n>employeeCreationDate}" 
+									 text="{path: 'employeesModel>CreationDate', type:'sap.ui.model.odata.type.Date'}"/>
+					<ObjectAttribute title="{i18n>employeeType}"
+									 text="{= ${employeesModel>Type} === '0' ? ${i18n>employeeTypeIntern} 
+                                            : ${employeesModel>Type} === '1' ? ${i18n>employeeTypeSelf} : ${i18n>employeeTypeManager} }"/>
+                    <ObjectAttribute title="{i18n>commentary}"
+									 text="{employeesModel>Comments}"/>
+				</attributes>
+			</ObjectHeader>
+
+            <IconTabBar id="iconTabBar"
+                        select=".onFilterSelect"
+                        expandable="false"
+                        class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter
+                        icon="sap-icon://attachment"
+                        key="files"
+                        text="{i18n>files}">
+
+                        <Panel class="sapUiResponsiveMargin"
+                               width="auto">
+                            <content>
+                                <UploadCollection id="viewEmplUploadFile"
+                                                  maximumFilenameLength="55" 
+                                                  maximumFileSize="2"
+                                                  multiple="true"
+                                                  sameFilenameAllowed="true"
+                                                  instantUpload="true"
+                                                  uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                                  change=".onFileChange"
+                                                  uploadComplete=".onFileUploadComplete"
+                                                  beforeUploadStarts=".onFileBeforeUpload"
+                                                  fileDeleted=".onFileDelete"
+                                                  filenameLengthExceed=".onFilenameLengthExceed"
+                                                  fileSizeExceed=".onFileSizeExceed"
+                                                  items="{employeesModel>UserToAttachment}"> 
+                                    <items>
+                                        <UploadCollectionItem documentId="{employeesModel>AttId}"
+                                                              fileName="{employeesModel>DocName}"
+                                                              mimeType="{employeesModel>MimeType}"
+                                                              visibleEdit="false"
+                                                              press=".onDownloadFile">
+                                        </UploadCollectionItem>
+                                    </items>
+                                </UploadCollection>
+                            </content>
+                        </Panel>
+                    
+                    </IconTabFilter>
+                    <IconTabFilter icon="sap-icon://money-bills"
+                                   key="files"
+                                   text="{i18n>historical}">
+
+                        <Panel class="sapUiSmallMargin"
+                               width="100%"
+                               height="30rem">
+                            <content>
+                            <c:Timeline id="timeline"
+                                        width="100%"
+                                        height="30rem"
+                                        alignment="Left"
+                                        enableDoubleSided="false"
+                                        groupByType="Year"
+                                        groupBy="CreationDate"
+                                        showHeaderBar="false"
+                                        content="{employeesModel>UserToSalary}">
+
+                                <c:content>
+                                    <c:TimelineItem icon="sap-icon://circle-task"
+                                                    dateTime="{employeesModel>CreationDate}"
+                                                    text="{employeesModel>Comments}"
+                                                    userName="{parts: [{path: 'employeesModel>Amount'}, 
+                                                                       {path: 'employeesModel>Waers'}],
+                                                                       type: 'sap.ui.model.type.Currency', 
+                                                                       formatOptions:{showMeasure:false}}"/>
+                                </c:content>
+                            </c:Timeline>
+                            </content>
+                        </Panel>
+
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnDeleteEmployee}" press=".onDeleteEmployee"/>
+                <Button text="{i18n>ascend}" press=".onAscend"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:FragmentDefinition> 

@@ -1,0 +1,75 @@
+{
+    "EmplTypeSelectedKey": "internConfig",
+    "itemss": [],
+    "EmployeeId": "",
+    "Name": "",
+    "LastName": "",
+    "DNI": "",
+    "CIF": "",
+    "CreationDate": null,
+    "Commentary": "",
+    "SalaryMin": 0,
+    "SalaryMax": 0,
+    "CurrentSalary": 0,
+    "NewSalary": null,
+    "DefaultCurrency": "EUR",
+    "Files": [],
+    "FilesCount": 0,
+    "NameState": true,
+    "LastNameState": true,
+    "DNIState": true,
+    "CIFState": true,
+    "CreationDateState": true,
+    "NameFilled": false,
+    "LastNameFilled": false,
+    "DNIFilled": false,
+    "CIFFilled": false,
+    "CreationDateFilled": false,
+    "DNIObligatory": true,
+    "DNIVisible": null,
+    "CIFObligatory": null,
+    "CIFVisible": null,
+    "SalaryVisible": null,
+    "CommentaryState": true,
+    "NewSalaryState": true,
+    "NewSalaryFilled": false,
+    "internConfig": {
+        "DNIObligatory": true,
+        "DNIVisible": true,
+        "CIFObligatory": false,
+        "CIFVisible": false,
+        "SalaryVisible": true,
+        "PriceVisible": false,
+        "Salary": {
+            "SalaryMin": 12000,
+            "SalaryMax": 80000,
+            "DefaultSalary": 24000
+        }
+    },
+    "ManagerConfig": {
+        "DNIObligatory": true,
+        "DNIVisible": true,
+        "CIFObligatory": false,
+        "CIFVisible": false,
+        "SalaryVisible": true,
+        "PriceVisible": false,
+        "Salary": {
+            "SalaryMin": 50000,
+            "SalaryMax": 200000,
+            "DefaultSalary": 70000
+        }
+    },
+    "SelfConfig": {
+        "DNIObligatory": false,
+        "DNIVisible": false,
+        "CIFObligatory": true,
+        "CIFVisible": true,
+        "SalaryVisible": false,
+        "PriceVisible": true,
+        "Salary": {
+            "SalaryMin": 100,
+            "SalaryMax": 2000,
+            "DefaultSalary": 400
+        }
+    }
+}
